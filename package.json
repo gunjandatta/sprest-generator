@@ -4,6 +4,7 @@
 	"description": "Generates the request details for the SharePoint REST library.",
 	"main": "dist/gd-sprest-generator.js",
 	"scripts": {
+		"all": "npm run build && npm run prod",
 		"build": "webpack --mode development",
 		"prod": "webpack --mode production"
 	},

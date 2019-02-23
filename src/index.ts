@@ -14,5 +14,6 @@ export const SPRESTGenerator = (el: HTMLElement) => {
     render(el);
 }
 
-// Set the global variable
-window["SPRESTGenerator"] = SPRESTGenerator;
+// Find the target element and initialize the app
+let el = document.querySelector("#request-generator") as HTMLElement;
+if (el) { SPRESTGenerator(el); }

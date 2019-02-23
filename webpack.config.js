@@ -2,14 +2,12 @@ var path = require("path");
 
 // Return the configuration
 module.exports = (env, argv) => {
-    return {
-        entry: [
-            "./node_modules/gd-bs/dist/gd-bs.min.js",
-            "./src/index.ts"
-        ],
+    let isDev = argv.mode == "development";
+
+    let cfg = {
         output: {
             path: path.resolve(__dirname, "dist"),
-            filename: "gd-sprest-generator" + (argv.mode == "development" ? "" : ".min") + ".js"
+            filename: "gd-sprest-generator" + (isDev ? "" : ".min") + ".js"
         },
         externals: {
             "gd-bs": "GD"
@@ -35,4 +33,13 @@ module.exports = (env, argv) => {
             ]
         }
     };
+
+    // Set the entry
+    cfg.entry = isDev ? [
+        //"./node_modules/gd-bs/dist/gd-bs.min.js",
+        "./src/index.ts"
+    ] : "./src/index.ts";
+
+    // Return the configuration
+    return cfg;
 }

@@ -10,7 +10,7 @@ export const render = (el: HTMLElement) => {
     Components.Navbar({
         className: "mb-3",
         el: elNav,
-        brand: "SharePoint REST Generator",
+        brand: "$REST Generator",
         type: Components.NavbarTypes.Dark,
         items: [
             { text: "List" },
