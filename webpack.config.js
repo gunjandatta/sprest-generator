@@ -36,7 +36,7 @@ module.exports = (env, argv) => {
 
     // Set the entry
     cfg.entry = isDev ? [
-        //"./node_modules/gd-bs/dist/gd-bs.min.js",
+        "./node_modules/gd-bs/dist/gd-bs.min.js",
         "./src/index.ts"
     ] : "./src/index.ts";
 

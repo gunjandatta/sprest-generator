@@ -4,28 +4,26 @@ import { MainTable } from "./table";
 // Renders the main app
 export const render = (el: HTMLElement) => {
     let elNav: HTMLElement = el.querySelector("#nav");
-    let elContent: HTMLElement = el.querySelector("#content");
 
     // Render the menu
-    Components.Navbar({
+    Components.Nav({
         className: "mb-3",
         el: elNav,
-        brand: "$REST Generator",
-        type: Components.NavbarTypes.Dark,
+        isTabs: true,
         items: [
-            { text: "List" },
-            { text: "Web" },
-            { text: "Site" }
-        ],
-        onClick: (item) => {
-            // Clear the content
-            while (elContent.firstChild) { elContent.removeChild(elContent.firstChild); }
-
-            // Render the content
-            MainTable(elContent, item.text);
-        }
+            {
+                isActive: true,
+                title: "List",
+                onRenderTab: (item, el) => { MainTable(el, item.title); }
+            },
+            {
+                title: "Site",
+                onRenderTab: (item, el) => { MainTable(el, item.title); }
+            },
+            {
+                title: "Web",
+                onRenderTab: (item, el) => { MainTable(el, item.title); }
+            }
+        ]
     });
-
-    // Render the content
-    MainTable(elContent, "List");
 }
