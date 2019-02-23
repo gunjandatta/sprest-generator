@@ -14,15 +14,15 @@ export const render = (el: HTMLElement) => {
             {
                 isActive: true,
                 title: "List",
-                onRenderTab: (item, el) => { MainTable(el, item.title); }
+                onRenderTab: (item, el) => { MainTable(el, item.title, "SP." + item.title); }
             },
             {
                 title: "Site",
-                onRenderTab: (item, el) => { MainTable(el, item.title); }
+                onRenderTab: (item, el) => { MainTable(el, item.title, "SP." + item.title); }
             },
             {
                 title: "Web",
-                onRenderTab: (item, el) => { MainTable(el, item.title); }
+                onRenderTab: (item, el) => { MainTable(el, item.title, "SP." + item.title); }
             }
         ]
     });
