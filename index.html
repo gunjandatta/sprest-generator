@@ -2,6 +2,7 @@
 
 <head>
     <title>SharePoint REST Request Generator</title>
+    <script src="dist/gd-sprest-generator.js"></script>
 </head>
 
 <body class="bs">
@@ -9,21 +10,13 @@
     <header></header>
 
     <!-- Main Element -->
-    <div id="main" class="d-flex flex-column">
-        <div class="row">
-            <div id="lib-ddl" class="col-2"></div>
-            <div id="lib-args" class="col-4"></div>
-            <div id="lib-props" class="col-2"></div>
-            <div id="lib-prop-args" class="col-4"></div>
-        </div>
-        <div id="output" class="d-flex flex-column">
-            <div id="output-btn"></div>
-            <div id="output-content"></div>
-        </div>
+    <div id="main" class="container-fluid">
     </div>
 
-    <!-- Scripts -->
-    <script src="dist/gd-sprest-generator.js"></script>
+    <!-- Initialize the app -->
+    <script type="text/javascript">
+        SPRESTGenerator(document.getElementById("main"));
+    </script>
 </body>
 
 </html>

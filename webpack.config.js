@@ -5,21 +5,22 @@ module.exports = (env, argv) => {
     return {
         entry: [
             "./node_modules/gd-bs/dist/gd-bs.min.js",
-            "./node_modules/gd-sprest/dist/gd-sprest.min.js",
-            "./src/index.js"
+            "./src/index.ts"
         ],
         output: {
             path: path.resolve(__dirname, "dist"),
             filename: "gd-sprest-generator" + (argv.mode == "development" ? "" : ".min") + ".js"
         },
         externals: {
-            "gd-bs": "GD",
-            "gd-sprest": "$REST"
+            "gd-bs": "GD"
+        },
+        resolve: {
+            extensions: [".ts", ".js"]
         },
         module: {
             rules: [
                 {
-                    test: /\.js$/,
+                    test: /\.ts$/,
                     exclude: /node_modules/,
                     use: [
                         {
@@ -27,7 +28,8 @@ module.exports = (env, argv) => {
                             options: {
                                 presets: ["@babel/preset-env"]
                             }
-                        }
+                        },
+                        { loader: "ts-loader" }
                     ]
                 }
             ]
