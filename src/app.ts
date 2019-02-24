@@ -34,7 +34,15 @@ export const render = (el: HTMLElement) => {
             },
             {
                 title: "Site",
-                onRenderTab: (item, el) => { MainTable(el, item.title, "socialfeed"); }
+                onRenderTab: (item, el) => { MainTable(el, item.title, "SP." + item.title); }
+            },
+            {
+                title: "Social Feed",
+                onRenderTab: (item, el) => { MainTable(el, "SocialFeed", "socialfeed"); }
+            },
+            {
+                title: "Utility",
+                onRenderTab: (item, el) => { MainTable(el, item.title, "utility"); }
             },
             {
                 title: "Web",
