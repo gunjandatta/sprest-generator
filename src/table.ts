@@ -1,6 +1,6 @@
 import { Components } from "gd-bs";
 import { $REST } from "gd-sprest";
-import { Mapper } from "gd-sprest/build/mapper";
+import { Mapper, Mapper_Old } from "gd-sprest/build/mapper";
 import { Modal } from "./modal";
 
 /**
@@ -67,7 +67,7 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
             // See if this is the method
             if (column.name == "method") {
                 let items: Array<Components.IDropdownItem> = [];
-                let mapper = Mapper[libType];
+                let mapper = Mapper[libType] || Mapper_Old[libType];
 
                 // Ensure the mapper exists
                 if (mapper == null) { return; }
@@ -198,6 +198,7 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
 
     // Method to get the information
     let getInfo = () => {
+        debugger;
         // Get the lib args
         let args = [tbArgs.getValue() || ""];
 

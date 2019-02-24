@@ -17,8 +17,24 @@ export const render = (el: HTMLElement) => {
                 onRenderTab: (item, el) => { MainTable(el, item.title, "SP." + item.title); }
             },
             {
+                title: "Navigation",
+                onRenderTab: (item, el) => { MainTable(el, item.title, "navigationservicerest"); }
+            },
+            {
+                title: "People Manager",
+                onRenderTab: (item, el) => { MainTable(el, "PeopleManager", "peoplemanager"); }
+            },
+            {
+                title: "People Picker",
+                onRenderTab: (item, el) => { MainTable(el, "PeoplePicker", "peoplepicker"); }
+            },
+            {
+                title: "Search",
+                onRenderTab: (item, el) => { MainTable(el, item.title, "Microsoft.Office.Server.Search.REST.SearchService"); }
+            },
+            {
                 title: "Site",
-                onRenderTab: (item, el) => { MainTable(el, item.title, "SP." + item.title); }
+                onRenderTab: (item, el) => { MainTable(el, item.title, "socialfeed"); }
             },
             {
                 title: "Web",
