@@ -13,10 +13,17 @@ module.exports = (env, argv) => {
             "gd-bs": "GD"
         },
         resolve: {
-            extensions: [".ts", ".js"]
+            extensions: [".ts", ".js", ".css"]
         },
         module: {
             rules: [
+                {
+                    test: /\.css$/,
+                    use: [
+                        { loader: "style-loader" },
+                        { loader: "css-loader" }
+                    ]
+                },
                 {
                     test: /\.ts$/,
                     exclude: /node_modules/,

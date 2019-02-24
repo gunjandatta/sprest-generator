@@ -1,4 +1,5 @@
 import { render } from "./app";
+import "./styles.css";
 
 // Initialize the library
 export const SPRESTGenerator = (el: HTMLElement) => {

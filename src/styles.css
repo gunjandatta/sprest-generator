@@ -1,0 +1,9 @@
+#modal-dlg .modal-content {
+    height: 70vh;
+    min-height: 350px;
+}
+
+#modal-dlg .input-group {
+    height: 50vh;
+    min-height: 250px;
+}

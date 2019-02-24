@@ -1,6 +1,7 @@
 import { Components } from "gd-bs";
 import { $REST } from "gd-sprest";
 import { Mapper } from "gd-sprest/build/mapper";
+import { Modal } from "./modal";
 
 /**
  * Main Table
@@ -173,16 +174,20 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
             // Else, this is the arguments
             else {
                 // Render a textbox
-                Components.InputGroup({
+                let tb = Components.InputGroup({
                     className: "action-tb",
                     el,
-                    appendedButtons: [
-                        {
-                            onClick: () => {
-                                // Display the text in a modal window
-                            }
+                    appendedButtons: [{
+                        text: "Popout",
+                        type: Components.ButtonTypes.Secondary,
+                        onClick: () => {
+                            // Display the args in a modal
+                            Modal(tb.getValue(), (args) => {
+                                // Update the text box
+                                tb.setValue(args);
+                            });
                         }
-                    ]
+                    }]
                 });
             }
         }
@@ -190,6 +195,45 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
 
     // Add a blank row
     table.addRows([{ libName, libType }]);
+
+    // Method to get the information
+    let getInfo = () => {
+        // Get the lib args
+        let args = [tbArgs.getValue() || ""];
+
+        // Get the lib object
+        let obj = lib.apply(null, args);
+
+        // Get the rows
+        let rows = table.el.querySelectorAll("tbody > tr");
+        for (let i = 0; i < rows.length; i++) {
+            let row = rows[i];
+
+            // Get the action
+            let action: any = row.querySelector(".action-ddl .btn");
+            action = action ? action.innerHTML.trim().split('(')[0] : null;
+
+            // Ensure the action exists
+            if (action == null) { break; }
+
+            // Get the action arguments
+            let actionArgs = null;
+            try {
+                // Convert the value to an array
+                actionArgs = (new Function("var i = [" + (row.querySelector(".action-tb input") as HTMLInputElement).value + " ]; return i;"))();
+            }
+            catch{ actionArgs = null; }
+
+            // Ensure the action exists
+            if (obj[action] && typeof (obj[action]) === "function") {
+                // Update the object
+                obj = obj[action].apply(obj, actionArgs);
+            }
+        }
+
+        // Return the information
+        return obj ? obj["getInfo"]() : null;
+    }
 
     // Render the generate button
     Components.Button({
@@ -201,41 +245,12 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
             let elOutput = document.getElementById("output-info") as HTMLElement;
             while (elOutput.firstChild) { elOutput.removeChild(elOutput.firstChild); }
 
-            // Get the lib args
-            let args = [tbArgs.getValue() || ""];
-
-            // Get the lib object
-            let obj = lib.apply(null, args);
-
-            // Get the rows
-            let rows = table.el.querySelectorAll("tbody > tr");
-            for (let i = 0; i < rows.length; i++) {
-                let row = rows[i];
-
-                // Get the action
-                let action: any = row.querySelector(".action-ddl .btn");
-                action = action ? action.innerHTML.trim().split('(')[0] : null;
-
-                // Ensure the action exists
-                if (action == null) { break; }
-
-                // Get the action arguments
-                let actionArgs = null;
-                try {
-                    // Convert the value to an array
-                    actionArgs = (new Function("var i = [" + (row.querySelector(".action-tb input") as HTMLInputElement).value + " ]; return i;"))();
-                }
-                catch{ actionArgs = null; }
-
-                // Ensure the action exists
-                if (obj[action] && typeof (obj[action]) === "function") {
-                    // Update the object
-                    obj = obj[action].apply(obj, actionArgs);
-                }
-            }
-
             // Get the information
-            let info = obj ? obj["getInfo"]() : null;
+            let info = null;
+            try { info = getInfo(); }
+            catch { }
+
+            // Ensure it exists
             if (info) {
                 // Render the information
                 elOutput.innerHTML = [
@@ -257,8 +272,10 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
             } else {
                 // Render an alert
                 Components.Alert({
-                    header: "Error",
-                    content: "Please check that the required arguments are provided."
+                    el: elOutput,
+                    type: Components.AlertTypes.Danger,
+                    header: "Error w/ Arguments",
+                    content: "The arguments provided are not in the correct format."
                 });
             }
         }
