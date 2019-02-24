@@ -68,6 +68,9 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
                 let items: Array<Components.IDropdownItem> = [];
                 let mapper = Mapper[libType];
 
+                // Ensure the mapper exists
+                if (mapper == null) { return; }
+
                 // See if properties exist
                 if (mapper["properties"]) {
                     // Add a header
@@ -210,7 +213,11 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
                 let row = rows[i];
 
                 // Get the action
-                let action = row.querySelector(".action-ddl .btn").innerHTML.trim().split('(')[0];
+                let action: any = row.querySelector(".action-ddl .btn");
+                action = action ? action.innerHTML.trim().split('(')[0] : null;
+
+                // Ensure the action exists
+                if (action == null) { break; }
 
                 // Get the action arguments
                 let actionArgs = null;
@@ -221,7 +228,6 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
                 catch{ actionArgs = null; }
 
                 // Ensure the action exists
-                debugger;
                 if (obj[action] && typeof (obj[action]) === "function") {
                     // Update the object
                     obj = obj[action].apply(obj, actionArgs);
@@ -233,15 +239,19 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
             if (info) {
                 // Render the information
                 elOutput.innerHTML = [
-                    "<h3>URL:</h3>",
-                    info.url.replace(/^file\:\/\//, ""),
                     "<h3>Request Type:</h3>",
-                    info.method,
+                    "<p>" + info.method + "</p>",
+                    "<h3>URL:</h3>",
+                    "<p>" + info.url.replace(/^file\:\/\//, "") + "</p>",
+                    "<h3>Header</h3>",
+                    "<p>Accept: 'application/json;odata=verbose'</p>",
+                    "<p>Content-Type: 'application/json;odata=verbose'</p>",
+                    info.method == "DELETE" || info.method == "MERGE" ? "<p>IF-Match: '*'</p>" : "",
                     "<h3>Body:</h3>",
                 ].join('\n');
 
                 // Add the request data
-                let elData = document.createElement("div");
+                let elData = document.createElement("p");
                 elData.innerText += info.data || "";
                 elOutput.appendChild(elData);
             } else {
