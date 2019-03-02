@@ -12,11 +12,20 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
     // Set the selected library and mapper
     let lib = $REST[libName];
 
-    // Render the arguments
-    let tbArgs = Components.InputGroup({
+    // Render the web url
+    let tbWebUrl = Components.InputGroup({
         el,
-        placeholder: isList ? "List Name" : libName + " Url"
+        placeholder: "Site Url"
     });
+
+    // See if this is a list
+    let tbListName: Components.IInputGroup = null;
+    if (isList) {
+        tbListName = Components.InputGroup({
+            el,
+            placeholder: "List Name"
+        });
+    }
 
     // Method to clear the child rows
     let clearChildRows = (el: HTMLElement) => {
@@ -198,12 +207,17 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
 
     // Method to get the information
     let getInfo = () => {
-        debugger;
-        // Get the lib args
-        let args = [tbArgs.getValue() || ""];
+        let obj = null;
+        let webUrl = tbWebUrl.getValue() || "";
 
-        // Get the lib object
-        let obj = lib.apply(null, args);
+        // See if this is a list
+        if (isList) {
+            // Set the lib object
+            obj = $REST.Web(webUrl).Lists(tbListName.getValue() || "");
+        } else {
+            // Set the lib object
+            obj = lib.apply(null, [webUrl]);
+        }
 
         // Get the rows
         let rows = table.el.querySelectorAll("tbody > tr");
