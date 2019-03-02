@@ -229,7 +229,7 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
             action = action ? action.innerHTML.trim().split('(')[0] : null;
 
             // Ensure the action exists
-            if (action == null) { break; }
+            if (action == null || action == "Select a Property or Method") { break; }
 
             // Get the action arguments
             let actionArgs = null;
@@ -267,16 +267,19 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
 
             // Ensure it exists
             if (info) {
+                // Parse the header information
+                let headers = [];
+                for (let key in info.headers) {
+                    // Add the header
+                    headers.push(key + ": " + info.headers[key]);
+                }
+
                 // Render the information
                 elOutput.innerHTML = [
-                    "<h3>Request Type:</h3>",
-                    "<p>" + info.method + "</p>",
                     "<h3>URL:</h3>",
                     "<p>" + info.url.replace(/^file\:\/\//, "") + "</p>",
                     "<h3>Header</h3>",
-                    "<p>Accept: 'application/json;odata=verbose'</p>",
-                    "<p>Content-Type: 'application/json;odata=verbose'</p>",
-                    info.method == "DELETE" || info.method == "MERGE" ? "<p>IF-Match: '*'</p>" : "",
+                    "<p>" + headers.join("</p><p>") + "</p>",
                     "<h3>Body:</h3>",
                 ].join('\n');
 
