@@ -213,10 +213,10 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
         // See if this is a list
         if (isList) {
             // Set the lib object
-            obj = $REST.Web(webUrl).Lists(tbListName.getValue() || "");
+            obj = $REST.Web(webUrl, { requestDigest: "REQUEST_DIGEST_VALUE" }).Lists(tbListName.getValue() || "");
         } else {
             // Set the lib object
-            obj = lib.apply(null, [webUrl]);
+            obj = lib.apply(null, [webUrl, { requestDigest: "REQUEST_DIGEST_VALUE" }]);
         }
 
         // Get the rows
