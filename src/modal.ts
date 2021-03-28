@@ -18,8 +18,8 @@ export const Modal = (args: string, onClose: (args: string) => void) => {
     // Create the modal
     let modal = Components.Modal({
         el,
-        isLarge: true,
         title: "Arguments",
+        type: Components.ModalTypes.Large,
         onClose: () => {
             // Call the event
             onClose(tb.getValue());
