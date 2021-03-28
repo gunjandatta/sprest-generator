@@ -9,9 +9,6 @@ module.exports = (env, argv) => {
             path: path.resolve(__dirname, "dist"),
             filename: "gd-sprest-generator" + (isDev ? "" : ".min") + ".js"
         },
-        externals: {
-            "gd-bs": "GD"
-        },
         resolve: {
             extensions: [".ts", ".js", ".css"]
         },
