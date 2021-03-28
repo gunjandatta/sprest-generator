@@ -3,12 +3,9 @@ import { MainTable } from "./table";
 
 // Renders the main app
 export const render = (el: HTMLElement) => {
-    let elNav: HTMLElement = el.querySelector("#nav");
-
     // Render the menu
     Components.Nav({
-        className: "mb-3",
-        el: elNav,
+        el,
         isTabs: true,
         items: [
             {

@@ -12,7 +12,7 @@ export const SPRESTGenerator = (el: HTMLElement) => {
     ].join('\n');
 
     // Render the app
-    render(el);
+    render(el.querySelector("#nav"));
 }
 
 // Find the target element and initialize the app
