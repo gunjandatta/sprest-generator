@@ -233,11 +233,15 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
 
             // Get the action arguments
             let actionArgs = null;
+            let elArgs = row.querySelector(".action-tb input") as HTMLInputElement;
             try {
                 // Convert the value to an array
-                actionArgs = (new Function("var i = [" + (row.querySelector(".action-tb input") as HTMLInputElement).value + " ]; return i;"))();
+                actionArgs = (new Function("var i = [" + elArgs.value + " ]; return i;"))();
             }
-            catch{ actionArgs = null; }
+            catch {
+                // Set the value as a string
+                actionArgs = elArgs.value ? [elArgs.value] : null;
+            }
 
             // Ensure the action exists
             if (obj[action] && typeof (obj[action]) === "function") {
