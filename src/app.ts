@@ -11,39 +11,39 @@ export const render = (el: HTMLElement) => {
             {
                 isActive: true,
                 title: "List",
-                onRenderTab: (item, el) => { MainTable(el, item.title, "SP." + item.title); }
+                onRenderTab: (el, item) => { MainTable(el, item.title, "SP." + item.title); }
             },
             {
                 title: "Navigation",
-                onRenderTab: (item, el) => { MainTable(el, item.title, "navigationservicerest"); }
+                onRenderTab: (el, item) => { MainTable(el, item.title, "navigationservicerest"); }
             },
             {
                 title: "People Manager",
-                onRenderTab: (item, el) => { MainTable(el, "PeopleManager", "peoplemanager"); }
+                onRenderTab: (el) => { MainTable(el, "PeopleManager", "peoplemanager"); }
             },
             {
                 title: "People Picker",
-                onRenderTab: (item, el) => { MainTable(el, "PeoplePicker", "peoplepicker"); }
+                onRenderTab: (el) => { MainTable(el, "PeoplePicker", "peoplepicker"); }
             },
             {
                 title: "Search",
-                onRenderTab: (item, el) => { MainTable(el, item.title, "Microsoft.Office.Server.Search.REST.SearchService"); }
+                onRenderTab: (el, item) => { MainTable(el, item.title, "Microsoft.Office.Server.Search.REST.SearchService"); }
             },
             {
                 title: "Site",
-                onRenderTab: (item, el) => { MainTable(el, item.title, "SP." + item.title); }
+                onRenderTab: (el, item) => { MainTable(el, item.title, "SP." + item.title); }
             },
             {
                 title: "Social Feed",
-                onRenderTab: (item, el) => { MainTable(el, "SocialFeed", "socialfeed"); }
+                onRenderTab: (el) => { MainTable(el, "SocialFeed", "socialfeed"); }
             },
             {
                 title: "Utility",
-                onRenderTab: (item, el) => { MainTable(el, item.title, "utility"); }
+                onRenderTab: (el, item) => { MainTable(el, item.title, "utility"); }
             },
             {
                 title: "Web",
-                onRenderTab: (item, el) => { MainTable(el, item.title, "SP." + item.title); }
+                onRenderTab: (el, item) => { MainTable(el, item.title, "SP." + item.title); }
             }
         ]
     });
