@@ -237,11 +237,18 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
             try {
                 // Convert the value to an array
                 actionArgs = (new Function("var i = [" + elArgs.value + " ]; return i;"))();
+
+                // See if this is a number
+                if (typeof (actionArgs[0]) === "number") {
+                    // See if this is really is a number
+                    let isNumber = elArgs.value as any == parseFloat(elArgs.value);
+                    if (!isNumber) {
+                        // Set the value
+                        actionArgs = [elArgs.value];
+                    }
+                }
             }
-            catch {
-                // Set the value as a string
-                actionArgs = elArgs.value ? [elArgs.value] : null;
-            }
+            catch { actionArgs = null; }
 
             // Ensure the action exists
             if (obj[action] && typeof (obj[action]) === "function") {
