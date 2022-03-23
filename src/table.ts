@@ -70,6 +70,10 @@ export const MainTable = (el: HTMLElement, libName: string, libType: string) => 
                 title: "Arguments"
             }
         ],
+        onRenderRow: (el) => {
+            // Set the index
+            el.setAttribute("data-idx", table.el.querySelectorAll("tbody > tr").length + "")
+        },
         onRenderCell: (el, column, data) => {
             let { libName, libType } = data;
 
